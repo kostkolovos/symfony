@@ -39,6 +39,21 @@ class Storage
      */
     private $status = 1;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $pieces = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $price = 0;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +118,42 @@ class Storage
     public function setStatus(bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getPieces(): ?int
+    {
+        return $this->pieces;
+    }
+
+    public function setPieces(int $pieces): self
+    {
+        $this->pieces = $pieces;
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }
