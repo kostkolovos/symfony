@@ -1,5 +1,6 @@
 ## Build Production
-Change in .env file `APP_ENV=prod` switch to production. After run `composer install --no-dev --optimize-autoloader` command.
+Create a .env.local file like the .env file and change the `APP_ENV=prod`.
+After that all the time run the `composer install --no-dev --optimize-autoloader` command.
 
 ## Build Developing
-Change in .env file `APP_ENV=dev` switch to developing. After run `composer install --dev --optimize-autoloader` command.
+Reads from .env file . Run `composer install --dev --optimize-autoloader` command.
