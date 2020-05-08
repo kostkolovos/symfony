@@ -76,7 +76,7 @@ class Storage
     private $storageTypes;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\StoragePetType", mappedBy="storage")
+     * @ORM\ManyToMany(targetEntity="App\Entity\StoragePetType", mappedBy="storage", cascade={"persist", "remove"})
      * @Groups({"storage"})
      * @MaxDepth(2)
      */

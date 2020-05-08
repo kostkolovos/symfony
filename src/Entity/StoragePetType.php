@@ -23,16 +23,16 @@ class StoragePetType
     private $id;
 
     /**
-     * @ORM\Column(type="boolean")
-     * @Groups({"storage"})
-     */
-    private $microchip;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Storage", inversedBy="storagePetTypes")
      * @Groups({"storage"})
      */
     private $storage;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"storage"})
+     */
+    private $microchip;
 
     public function __construct()
     {
@@ -42,18 +42,6 @@ class StoragePetType
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getMicrochip(): ?bool
-    {
-        return $this->microchip;
-    }
-
-    public function setMicrochip(bool $microchip): self
-    {
-        $this->microchip = $microchip;
-
-        return $this;
     }
 
     /**
@@ -78,6 +66,18 @@ class StoragePetType
         if ($this->storage->contains($storage)) {
             $this->storage->removeElement($storage);
         }
+
+        return $this;
+    }
+
+    public function getMicrochip(): ?string
+    {
+        return $this->microchip;
+    }
+
+    public function setMicrochip(string $microchip): self
+    {
+        $this->microchip = $microchip;
 
         return $this;
     }
