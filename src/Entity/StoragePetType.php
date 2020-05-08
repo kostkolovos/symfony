@@ -34,6 +34,24 @@ class StoragePetType
      */
     private $microchip;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"storage"})
+     */
+    private $male;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"storage"})
+     */
+    private $female;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     * @Groups({"storage"})
+     */
+    private $booklet;
+
     public function __construct()
     {
         $this->storage = new ArrayCollection();
@@ -78,6 +96,42 @@ class StoragePetType
     public function setMicrochip(string $microchip): self
     {
         $this->microchip = $microchip;
+
+        return $this;
+    }
+
+    public function getMale(): ?int
+    {
+        return $this->male;
+    }
+
+    public function setMale(?int $male): self
+    {
+        $this->male = $male;
+
+        return $this;
+    }
+
+    public function getFemale(): ?int
+    {
+        return $this->female;
+    }
+
+    public function setFemale(?int $female): self
+    {
+        $this->female = $female;
+
+        return $this;
+    }
+
+    public function getBooklet(): ?string
+    {
+        return $this->booklet;
+    }
+
+    public function setBooklet(?string $booklet): self
+    {
+        $this->booklet = $booklet;
 
         return $this;
     }
