@@ -3,8 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ApiResource(
@@ -71,6 +74,18 @@ class Storage
      * @Groups({"storage"})
      */
     private $storageTypes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\StoragePetType", mappedBy="storage")
+     * @Groups({"storage"})
+     * @MaxDepth(2)
+     */
+    private $storagePetTypes;
+
+    public function __construct()
+    {
+        $this->storagePetTypes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -184,6 +199,34 @@ class Storage
     public function setStorageTypes(?StorageTypes $storageTypes): self
     {
         $this->storageTypes = $storageTypes;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StoragePetType[]
+     */
+    public function getStoragePetTypes(): Collection
+    {
+        return $this->storagePetTypes;
+    }
+
+    public function addStoragePetType(StoragePetType $storagePetType): self
+    {
+        if (!$this->storagePetTypes->contains($storagePetType)) {
+            $this->storagePetTypes[] = $storagePetType;
+            $storagePetType->addStorage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStoragePetType(StoragePetType $storagePetType): self
+    {
+        if ($this->storagePetTypes->contains($storagePetType)) {
+            $this->storagePetTypes->removeElement($storagePetType);
+            $storagePetType->removeStorage($this);
+        }
 
         return $this;
     }
