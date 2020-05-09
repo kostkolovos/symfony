@@ -24,7 +24,6 @@ class StoragePetType
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Storage", inversedBy="storagePetTypes")
-     * @Groups({"storage"})
      */
     private $storage;
 
