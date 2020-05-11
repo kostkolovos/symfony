@@ -6,9 +6,13 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"orders"},"enable_max_depth"=true},
+ *     denormalizationContext={"groups"={"orders"}}
+ *     )
  * @ORM\Entity(repositoryClass="App\Repository\OrdersRepository")
  * @ORM\HasLifecycleCallbacks()
  */
@@ -18,26 +22,31 @@ class Orders
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"orders"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"orders"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"orders"})
      */
     private $updatedAt;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Storage", inversedBy="orders")
+     * @Groups({"orders"})
      */
     private $storage;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"orders"})
      */
     private $status = 1;
 

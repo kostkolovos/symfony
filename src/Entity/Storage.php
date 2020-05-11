@@ -23,61 +23,61 @@ class Storage
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $updatedAt;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $status = 1;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $pieces = 0;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $price = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\StorageTypes", inversedBy="storages", cascade={"persist", "remove"})
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $storageTypes;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\StoragePetType", mappedBy="storage", cascade={"persist", "remove"})
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      * @MaxDepth(2)
      */
     private $storagePetTypes;
