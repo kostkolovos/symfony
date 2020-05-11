@@ -82,9 +82,15 @@ class Storage
      */
     private $storagePetTypes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Orders", mappedBy="storage")
+     */
+    private $orders;
+
     public function __construct()
     {
         $this->storagePetTypes = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -226,6 +232,34 @@ class Storage
         if ($this->storagePetTypes->contains($storagePetType)) {
             $this->storagePetTypes->removeElement($storagePetType);
             $storagePetType->removeStorage($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Orders[]
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Orders $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->addStorage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Orders $order): self
+    {
+        if ($this->orders->contains($order)) {
+            $this->orders->removeElement($order);
+            $order->removeStorage($this);
         }
 
         return $this;
