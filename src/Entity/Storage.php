@@ -83,14 +83,14 @@ class Storage
     private $storagePetTypes;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Orders", mappedBy="storage")
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderStorageCalculator", mappedBy="storage")
      */
-    private $orders;
+    private $orderStorageCalculators;
 
     public function __construct()
     {
         $this->storagePetTypes = new ArrayCollection();
-        $this->orders = new ArrayCollection();
+        $this->orderStorageCalculators = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -238,28 +238,31 @@ class Storage
     }
 
     /**
-     * @return Collection|Orders[]
+     * @return Collection|OrderStorageCalculator[]
      */
-    public function getOrders(): Collection
+    public function getOrderStorageCalculators(): Collection
     {
-        return $this->orders;
+        return $this->orderStorageCalculators;
     }
 
-    public function addOrder(Orders $order): self
+    public function addOrderStorageCalculator(OrderStorageCalculator $orderStorageCalculator): self
     {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
-            $order->addStorage($this);
+        if (!$this->orderStorageCalculators->contains($orderStorageCalculator)) {
+            $this->orderStorageCalculators[] = $orderStorageCalculator;
+            $orderStorageCalculator->setStorage($this);
         }
 
         return $this;
     }
 
-    public function removeOrder(Orders $order): self
+    public function removeOrderStorageCalculator(OrderStorageCalculator $orderStorageCalculator): self
     {
-        if ($this->orders->contains($order)) {
-            $this->orders->removeElement($order);
-            $order->removeStorage($this);
+        if ($this->orderStorageCalculators->contains($orderStorageCalculator)) {
+            $this->orderStorageCalculators->removeElement($orderStorageCalculator);
+            // set the owning side to null (unless already changed)
+            if ($orderStorageCalculator->getStorage() === $this) {
+                $orderStorageCalculator->setStorage(null);
+            }
         }
 
         return $this;

@@ -39,20 +39,20 @@ class Orders
     private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Storage", inversedBy="orders", cascade={"persist", "remove"})
-     * @Groups({"orders"})
-     */
-    private $storage;
-
-    /**
      * @ORM\Column(type="boolean")
      * @Groups({"orders"})
      */
     private $status = 1;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderStorageCalculator", mappedBy="orders", cascade={"all"})
+     * @Groups({"orders"})
+     */
+    private $orderStorageCalculators;
+
     public function __construct()
     {
-        $this->storage = new ArrayCollection();
+        $this->orderStorageCalculators = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,32 +84,6 @@ class Orders
         return $this;
     }
 
-    /**
-     * @return Collection|Storage[]
-     */
-    public function getStorage(): Collection
-    {
-        return $this->storage;
-    }
-
-    public function addStorage(Storage $storage): self
-    {
-        if (!$this->storage->contains($storage)) {
-            $this->storage[] = $storage;
-        }
-
-        return $this;
-    }
-
-    public function removeStorage(Storage $storage): self
-    {
-        if ($this->storage->contains($storage)) {
-            $this->storage->removeElement($storage);
-        }
-
-        return $this;
-    }
-
     /** @ORM\PrePersist() */
     public function prePersist()
     {
@@ -133,6 +107,37 @@ class Orders
     public function setStatus(bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderStorageCalculator[]
+     */
+    public function getOrderStorageCalculators(): Collection
+    {
+        return $this->orderStorageCalculators;
+    }
+
+    public function addOrderStorageCalculator(OrderStorageCalculator $orderStorageCalculator): self
+    {
+        if (!$this->orderStorageCalculators->contains($orderStorageCalculator)) {
+            $this->orderStorageCalculators[] = $orderStorageCalculator;
+            $orderStorageCalculator->setOrders($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderStorageCalculator(OrderStorageCalculator $orderStorageCalculator): self
+    {
+        if ($this->orderStorageCalculators->contains($orderStorageCalculator)) {
+            $this->orderStorageCalculators->removeElement($orderStorageCalculator);
+            // set the owning side to null (unless already changed)
+            if ($orderStorageCalculator->getOrders() === $this) {
+                $orderStorageCalculator->setOrders(null);
+            }
+        }
 
         return $this;
     }
