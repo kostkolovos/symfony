@@ -39,7 +39,7 @@ class Orders
     private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Storage", inversedBy="orders")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Storage", inversedBy="orders", cascade={"persist", "remove"})
      * @Groups({"orders"})
      */
     private $storage;

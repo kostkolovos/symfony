@@ -71,13 +71,13 @@ class Storage
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\StorageTypes", inversedBy="storages", cascade={"persist", "remove"})
-     * @Groups({"storage","orders"})
+     * @Groups({"storage"})
      */
     private $storageTypes;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\StoragePetType", mappedBy="storage", cascade={"persist", "remove"})
-     * @Groups({"storage","orders"})
+     * @Groups({"storage"})
      * @MaxDepth(2)
      */
     private $storagePetTypes;
