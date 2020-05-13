@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -36,6 +38,17 @@ class OrderStorageCalculator
      * @Groups({"orders"})
      */
     private $pieces;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\StoragePetType", inversedBy="orderStorageCalculators", cascade={"persist", "remove"})
+     * @Groups({"orders"})
+     */
+    private $storagePetType;
+
+    public function __construct()
+    {
+        $this->storagePetType = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +87,32 @@ class OrderStorageCalculator
     public function setPieces(int $pieces): self
     {
         $this->pieces = $pieces;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StoragePetType[]
+     */
+    public function getStoragePetType(): Collection
+    {
+        return $this->storagePetType;
+    }
+
+    public function addStoragePetType(StoragePetType $storagePetType): self
+    {
+        if (!$this->storagePetType->contains($storagePetType)) {
+            $this->storagePetType[] = $storagePetType;
+        }
+
+        return $this;
+    }
+
+    public function removeStoragePetType(StoragePetType $storagePetType): self
+    {
+        if ($this->storagePetType->contains($storagePetType)) {
+            $this->storagePetType->removeElement($storagePetType);
+        }
 
         return $this;
     }
