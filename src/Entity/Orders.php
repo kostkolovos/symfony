@@ -45,7 +45,7 @@ class Orders
     private $status = 1;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderStorageCalculator", mappedBy="orders", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderStorageCalculator", mappedBy="orders", cascade={"persist", "remove"}, orphanRemoval=true)
      * @Groups({"orders"})
      */
     private $orderStorageCalculators;
