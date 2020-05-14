@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource()
@@ -17,16 +18,19 @@ class Customer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"orders"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=150)
+     * @Groups({"orders"})
      */
     private $fullName;
 
     /**
      * @ORM\Column(type="string", length=15, nullable=true)
+     * @Groups({"orders"})
      */
     private $mobile;
 
