@@ -50,6 +50,18 @@ class Orders
      */
     private $orderStorageCalculators;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Groups({"orders"})
+     */
+    private $description;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Customer", inversedBy="orders", cascade={"persist", "remove"})
+     * @Groups({"orders"})
+     */
+    private $customer;
+
     public function __construct()
     {
         $this->orderStorageCalculators = new ArrayCollection();
@@ -138,6 +150,30 @@ class Orders
                 $orderStorageCalculator->setOrders(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(?Customer $customer): self
+    {
+        $this->customer = $customer;
 
         return $this;
     }
