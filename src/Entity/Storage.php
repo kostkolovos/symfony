@@ -71,7 +71,7 @@ class Storage
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\StorageTypes", inversedBy="storages", cascade={"persist", "remove"})
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $storageTypes;
 

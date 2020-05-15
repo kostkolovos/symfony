@@ -18,19 +18,19 @@ class StorageTypes
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $sort;
 
