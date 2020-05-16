@@ -64,12 +64,6 @@ class Storage
     private $pieces = 0;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Groups({"storage","orders"})
-     */
-    private $price = 0;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\StorageTypes", inversedBy="storages", cascade={"persist", "remove"})
      * @Groups({"storage","orders"})
      */
@@ -86,6 +80,13 @@ class Storage
      * @ORM\OneToMany(targetEntity="App\Entity\OrderStorageCalculator", mappedBy="storage")
      */
     private $orderStorageCalculators;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Price", inversedBy="storages", cascade={"persist", "remove"})
+     * @Groups({"storage","orders"})
+     * @MaxDepth(2)
+     */
+    private $price;
 
     public function __construct()
     {
@@ -185,18 +186,6 @@ class Storage
         return $this;
     }
 
-    public function getPrice(): ?int
-    {
-        return $this->price;
-    }
-
-    public function setPrice(int $price): self
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
     public function getStorageTypes(): ?StorageTypes
     {
         return $this->storageTypes;
@@ -264,6 +253,18 @@ class Storage
                 $orderStorageCalculator->setStorage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrice(): ?Price
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?Price $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }
