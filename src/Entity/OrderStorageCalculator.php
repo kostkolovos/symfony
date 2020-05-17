@@ -45,6 +45,12 @@ class OrderStorageCalculator
      */
     private $storagePetType;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Price", inversedBy="orderStorageCalculators", cascade={"persist", "remove"})
+     * @Groups({"orders"})
+     */
+    private $price;
+
     public function __construct()
     {
         $this->storagePetType = new ArrayCollection();
@@ -113,6 +119,18 @@ class OrderStorageCalculator
         if ($this->storagePetType->contains($storagePetType)) {
             $this->storagePetType->removeElement($storagePetType);
         }
+
+        return $this;
+    }
+
+    public function getPrice(): ?Price
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?Price $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

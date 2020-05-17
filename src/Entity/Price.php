@@ -52,9 +52,15 @@ class Price
      */
     private $storages;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderStorageCalculator", mappedBy="price")
+     */
+    private $orderStorageCalculators;
+
     public function __construct()
     {
         $this->storages = new ArrayCollection();
+        $this->orderStorageCalculators = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -155,5 +161,36 @@ class Price
     {
         $sum = $this->initial + $this->profit + $this->shipping;
         $this->total = $sum;
+    }
+
+    /**
+     * @return Collection|OrderStorageCalculator[]
+     */
+    public function getOrderStorageCalculators(): Collection
+    {
+        return $this->orderStorageCalculators;
+    }
+
+    public function addOrderStorageCalculator(OrderStorageCalculator $orderStorageCalculator): self
+    {
+        if (!$this->orderStorageCalculators->contains($orderStorageCalculator)) {
+            $this->orderStorageCalculators[] = $orderStorageCalculator;
+            $orderStorageCalculator->setPrice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderStorageCalculator(OrderStorageCalculator $orderStorageCalculator): self
+    {
+        if ($this->orderStorageCalculators->contains($orderStorageCalculator)) {
+            $this->orderStorageCalculators->removeElement($orderStorageCalculator);
+            // set the owning side to null (unless already changed)
+            if ($orderStorageCalculator->getPrice() === $this) {
+                $orderStorageCalculator->setPrice(null);
+            }
+        }
+
+        return $this;
     }
 }
