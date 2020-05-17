@@ -19,31 +19,31 @@ class Price
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $total;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $initial;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $profit;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @Groups({"storage"})
+     * @Groups({"storage","orders"})
      */
     private $shipping;
 
