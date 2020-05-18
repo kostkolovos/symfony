@@ -62,6 +62,12 @@ class Orders
      */
     private $customer;
 
+    /**
+     * @ORM\Column(type="float")
+     * @Groups({"orders"})
+     */
+    private $orderPrice;
+
     public function __construct()
     {
         $this->orderStorageCalculators = new ArrayCollection();
@@ -174,6 +180,18 @@ class Orders
     public function setCustomer(?Customer $customer): self
     {
         $this->customer = $customer;
+
+        return $this;
+    }
+
+    public function getOrderPrice(): ?float
+    {
+        return $this->orderPrice;
+    }
+
+    public function setOrderPrice(float $orderPrice): self
+    {
+        $this->orderPrice = $orderPrice;
 
         return $this;
     }
