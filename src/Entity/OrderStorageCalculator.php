@@ -51,6 +51,12 @@ class OrderStorageCalculator
      */
     private $price;
 
+    /**
+     * @ORM\Column(type="float")
+     * @Groups({"orders"})
+     */
+    private $finalPrice;
+
     public function __construct()
     {
         $this->storagePetType = new ArrayCollection();
@@ -131,6 +137,18 @@ class OrderStorageCalculator
     public function setPrice(?Price $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getFinalPrice(): ?float
+    {
+        return $this->finalPrice;
+    }
+
+    public function setFinalPrice(float $finalPrice): self
+    {
+        $this->finalPrice = $finalPrice;
 
         return $this;
     }
