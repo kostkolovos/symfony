@@ -88,6 +88,11 @@ class Storage
      */
     private $price;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\MediaObject", inversedBy="storages")
+     */
+    private $image;
+
     public function __construct()
     {
         $this->storagePetTypes = new ArrayCollection();
@@ -265,6 +270,18 @@ class Storage
     public function setPrice(?Price $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getImage(): ?MediaObject
+    {
+        return $this->image;
+    }
+
+    public function setImage(?MediaObject $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
