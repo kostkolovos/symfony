@@ -93,12 +93,13 @@ class Storage
      * @Groups({"storage","orders"})
      * @MaxDepth(2)
      */
-    private $image;
+    private $images;
 
     public function __construct()
     {
         $this->storagePetTypes = new ArrayCollection();
         $this->orderStorageCalculators = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -276,14 +277,28 @@ class Storage
         return $this;
     }
 
-    public function getImage(): ?MediaObject
+    /**
+     * @return Collection|MediaObject[]
+     */
+    public function getImages(): Collection
     {
-        return $this->image;
+        return $this->images;
     }
 
-    public function setImage(?MediaObject $image): self
+    public function addImage(MediaObject $image): self
     {
-        $this->image = $image;
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+        }
+
+        return $this;
+    }
+
+    public function removeImage(MediaObject $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+        }
 
         return $this;
     }

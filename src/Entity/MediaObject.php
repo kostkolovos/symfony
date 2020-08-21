@@ -93,7 +93,7 @@ class MediaObject
     public $filePath;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Storage", mappedBy="image")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Storage", mappedBy="images")
      */
     private $storages;
 
@@ -119,7 +119,7 @@ class MediaObject
     {
         if (!$this->storages->contains($storage)) {
             $this->storages[] = $storage;
-            $storage->setImage($this);
+            $storage->addImage($this);
         }
 
         return $this;
@@ -129,10 +129,7 @@ class MediaObject
     {
         if ($this->storages->contains($storage)) {
             $this->storages->removeElement($storage);
-            // set the owning side to null (unless already changed)
-            if ($storage->getImage() === $this) {
-                $storage->setImage(null);
-            }
+            $storage->removeImage($this);
         }
 
         return $this;
