@@ -49,7 +49,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *     },
  *     itemOperations={
  *         "get"
- *     }
+ *     },
+ *     normalizationContext={"groups"={"storage"},"enable_max_depth"=true},
+ *     denormalizationContext={"groups"={"storage"}}
+ *     )
  * )
  * @Vich\Uploadable
  */
@@ -61,12 +64,14 @@ class MediaObject
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      * @ORM\Id
+     * @Groups({"storage","orders"})
      */
     protected $id;
 
     /**
      * @var string|null
      * @Groups({"media_object_read"})
+     * @Groups({"storage","orders"})
      */
     public $contentUrl;
 
@@ -75,6 +80,7 @@ class MediaObject
      *
      * @Assert\NotNull(groups={"media_object_create"})
      * @Vich\UploadableField(mapping="media_object", fileNameProperty="filePath")
+     * @Groups({"storage","orders"})
      */
     public $file;
 
@@ -82,6 +88,7 @@ class MediaObject
      * @var string|null
      *
      * @ORM\Column(nullable=true)
+     * @Groups({"storage","orders"})
      */
     public $filePath;
 

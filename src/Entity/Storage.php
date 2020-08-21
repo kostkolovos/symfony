@@ -89,7 +89,9 @@ class Storage
     private $price;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\MediaObject", inversedBy="storages")
+     * @ORM\ManyToMany(targetEntity="App\Entity\MediaObject", inversedBy="storages")
+     * @Groups({"storage","orders"})
+     * @MaxDepth(2)
      */
     private $image;
 
