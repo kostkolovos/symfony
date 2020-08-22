@@ -80,7 +80,6 @@ class MediaObject
      *
      * @Assert\NotNull(groups={"media_object_create"})
      * @Vich\UploadableField(mapping="media_object", fileNameProperty="filePath")
-     * @Groups({"storage","orders"})
      */
     public $file;
 
