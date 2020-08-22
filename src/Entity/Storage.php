@@ -89,7 +89,7 @@ class Storage
     private $price;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\MediaObject", inversedBy="storages")
+     * @ORM\ManyToMany(targetEntity="App\Entity\MediaObject", inversedBy="storages", cascade={"persist", "remove"})
      * @Groups({"storage","orders"})
      * @MaxDepth(2)
      */
