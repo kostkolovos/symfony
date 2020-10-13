@@ -71,6 +71,11 @@ class User implements UserInterface
      */
     private $status = 1;
 
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    private $language = 'en';
+
 
     public function getId(): ?int
     {
@@ -165,6 +170,18 @@ class User implements UserInterface
     public function setStatus(bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(string $language): self
+    {
+        $this->language = $language;
 
         return $this;
     }

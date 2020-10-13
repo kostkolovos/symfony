@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @Route("/api")
+ * @Route("/api/user")
  */
 class Me extends AbstractController
 {
@@ -22,7 +22,8 @@ class Me extends AbstractController
             [
                 'id' => $user->getId(),
                 'username' => $user->getUsername(),
-                'roles' => $user->getRoles()
+                'roles' => $user->getRoles(),
+                'language' => $user->getLanguage()
             ]
         );
     }
