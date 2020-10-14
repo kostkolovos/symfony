@@ -95,11 +95,19 @@ class Storage
      */
     private $images;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\StorageLink", mappedBy="storage", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @Groups({"storage","orders"})
+     * @MaxDepth(2)
+     */
+    private $storageLinks;
+
     public function __construct()
     {
         $this->storagePetTypes = new ArrayCollection();
         $this->orderStorageCalculators = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->storageLinks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -298,6 +306,37 @@ class Storage
     {
         if ($this->images->contains($image)) {
             $this->images->removeElement($image);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StorageLink[]
+     */
+    public function getStorageLinks(): Collection
+    {
+        return $this->storageLinks;
+    }
+
+    public function addStorageLink(StorageLink $storageLink): self
+    {
+        if (!$this->storageLinks->contains($storageLink)) {
+            $this->storageLinks[] = $storageLink;
+            $storageLink->setStorage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStorageLink(StorageLink $storageLink): self
+    {
+        if ($this->storageLinks->contains($storageLink)) {
+            $this->storageLinks->removeElement($storageLink);
+            // set the owning side to null (unless already changed)
+            if ($storageLink->getStorage() === $this) {
+                $storageLink->setStorage(null);
+            }
         }
 
         return $this;
