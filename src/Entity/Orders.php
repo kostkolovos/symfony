@@ -68,6 +68,12 @@ class Orders
      */
     private $orderPrice;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\OrderProgress", inversedBy="orders", cascade={"persist", "remove"})
+     * @Groups({"orders"})
+     */
+    private $orderProgress;
+
     public function __construct()
     {
         $this->orderStorageCalculators = new ArrayCollection();
@@ -192,6 +198,18 @@ class Orders
     public function setOrderPrice(float $orderPrice): self
     {
         $this->orderPrice = $orderPrice;
+
+        return $this;
+    }
+
+    public function getOrderProgress(): ?OrderProgress
+    {
+        return $this->orderProgress;
+    }
+
+    public function setOrderProgress(?OrderProgress $orderProgress): self
+    {
+        $this->orderProgress = $orderProgress;
 
         return $this;
     }
